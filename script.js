@@ -51,3 +51,7 @@ function generateHEX() {
   const blue = Math.floor(Math.random() * 255);
   return `#${red.toString(16)}${green.toString(16)}${blue.toString(16)}`;
 }
+
+function firstName(params) {
+  console.log("hello how are you");
+}
