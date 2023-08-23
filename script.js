@@ -3,6 +3,9 @@ const changeBtn = document.getElementById("btn");
 const output = document.getElementById("input");
 const copyBtn = document.getElementById("btn-copy");
 
+// div er value empty ache ekhon
+let div = null;
+
 // change the hex color
 changeBtn.addEventListener("click", function () {
   const bgColor = generateHEX();
@@ -13,19 +16,32 @@ changeBtn.addEventListener("click", function () {
 // copy to hex color code
 copyBtn.addEventListener("click", function () {
   navigator.clipboard.writeText(output.value);
+
+  // div null and remove kora hoiche
+  if (div !== null) {
+    div.remove();
+    div = null;
+  }
   // toast message
   generateToast(`${output.value} copied`);
 });
 
 // toast div create
 function generateToast(mess) {
-  const div = document.createElement("div");
+  div = document.createElement("div");
   div.innerText = mess;
   div.className = "toast-message toast-message-slide-in";
+  div.addEventListener("click", function () {
+    div.classList.remove("toast-message-slide-in");
+    div.classList.add("toast-message-slide-out");
+    // toast message remove
+    div.addEventListener("animationend", function () {
+      div.remove();
+      div = null;
+    });
+  });
+
   document.body.appendChild(div);
-  setTimeout(() => {
-    div.style.display = "none";
-  }, 2000);
 }
 
 // generate the hex color
